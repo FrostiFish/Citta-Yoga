@@ -71,5 +71,11 @@ void serialEvent(Serial port) {
 void keyPressed() {
   if (key != CODED && key == ' ') {
     run = !run;
+    if (run) {
+      println("Program continued");
+    }
+    else {
+      println("Program paused");
+    }
   }
 }
