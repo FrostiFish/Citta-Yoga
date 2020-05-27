@@ -10,9 +10,7 @@ Interface programInterface;
 int sensorNum = 3;
 int[] rawData = new int[sensorNum];
 boolean dataUpdated = false;
-
-char guess;
-boolean check = false;
+boolean run = true;
 
 void setup() {
   size(800, 450);             //set a canvas
@@ -43,9 +41,12 @@ void draw() {
     fill(255);
     float[] X = {rawData[0], rawData[1], rawData[2]}; 
     String Y = getPrediction(X);
-    guess= Y.charAt(0);
+    char guess= Y.charAt(0);
 
-    programInterface.playImage(guess);
+    if (run) {
+      programInterface.playImage(guess);
+    }
+    
     dataUpdated = false;
   }
 }
@@ -64,5 +65,11 @@ void serialEvent(Serial port) {
       rawData[2] = int(trim(inData.substring(1)));
       dataUpdated = true;
     }
+  }
+}
+
+void keyPressed() {
+  if (key != CODED && key == ' ') {
+    run = !run;
   }
 }
