@@ -48,14 +48,14 @@ class Interface {
       this.playSound(0);
     }
 
-    if (this.file.isPlaying() == false && this.pose0 ==false) {
+    if (this.file.isPlaying() == false && this.pose0 == false) {
       image(this.img1, 0, 0, width, height);
       this.playSound(1);
       this.pose0= true;
     }
 
-    // Pose B = first pose
-    if (this.file2.isPlaying() == false && this.played2 == true && pred=='B'  && this.gong.isPlaying() == false && this.playedGong == false && this.pose1==false && this.pose0==true) {
+    // Pose A = first pose
+    if (this.file2.isPlaying() == false && this.played2 == true && pred == 'A'  && this.gong.isPlaying() == false && this.playedGong == false && this.pose1 == false && this.pose0 == true) {
       this.gong.play();
       println(pred);
       this.playedGong = true;
@@ -69,8 +69,8 @@ class Interface {
     }
 
 
-    //Pose C = second pose
-    if (this.file3.isPlaying() == false && this.played3 == true && pred=='C' && this.gong.isPlaying() == false && this.playedGong == false && this.pose1 == true && this.pose2 == false) {
+    //Pose B = second pose
+    if (this.file3.isPlaying() == false && this.played3 == true && pred == 'B' && this.gong.isPlaying() == false && this.playedGong == false && this.pose1 == true && this.pose2 == false) {
       // sw2.start();
       this.gong.play();
       println(pred);
@@ -83,8 +83,8 @@ class Interface {
       image(this.img3, 0, 0, width, height);
       this.playSound(3);
     }
-    //Pose D = third pose
-    if (this.file4.isPlaying() == false && this.played4 == true && pred=='D' && this.gong.isPlaying() == false && this.playedGong == false && this.pose1 == true && this.pose2 == true && this.pose3 == false) {
+    //Pose C = third pose
+    if (this.file4.isPlaying() == false && this.played4 == true && pred=='C' && this.gong.isPlaying() == false && this.playedGong == false && this.pose1 == true && this.pose2 == true && this.pose3 == false) {
       // sw2.start();
       this.gong.play();
       println(pred);
@@ -109,7 +109,7 @@ class Interface {
       }
     }
     if (i == 1 && this.played2 == false) {
-      if (this.file.isPlaying() == false && this.file2.isPlaying() == false && this.file3.isPlaying()== false && this.file4.isPlaying() == false) {
+      if (this.file.isPlaying() == false && this.file2.isPlaying() == false && this.file3.isPlaying() == false && this.file4.isPlaying() == false) {
         this.file2.play();
         this.played2 = true;
       }
@@ -128,7 +128,7 @@ class Interface {
     }
   }
 
-  void resetPoses() {
+  public void resetPoses() {
     this.played = true;
     this.played2 = false;
     this.played3 = false;
