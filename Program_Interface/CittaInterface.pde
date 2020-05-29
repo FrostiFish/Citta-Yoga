@@ -31,6 +31,7 @@ class Interface {
     this.file3= new SoundFile (parameter, "Pose-6.wav");
     this.file4 = new SoundFile(parameter, "Pose-7.wav");
     this.gong = new SoundFile (parameter, "gong.wav");
+    this.gong.amp(0.2);
 
 
     this.img0= loadImage("3_poses_zonnegroet-04.png");
