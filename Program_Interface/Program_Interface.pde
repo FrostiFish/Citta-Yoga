@@ -4,6 +4,7 @@
 //*********************************************
 
 import processing.serial.*;
+
 Serial port;
 Interface programInterface;
 
@@ -11,6 +12,9 @@ int sensorNum = 3;
 int[] rawData = new int[sensorNum];
 boolean dataUpdated = false;
 boolean run = true;
+
+float[] scalerMean = new float[3]; 
+float[] scalerVariance = new float[3]; ;
 
 void setup() {
   size(800, 450);             //set a canvas
@@ -31,6 +35,16 @@ void setup() {
   saveModel(model="LinearSVC.model"); //save the model
 
   background(52);
+
+  File f = dataFile("scalerCalibrationTable.csv");
+  String filePath = f.getPath();
+  boolean exist = f.isFile();
+
+  if (!exist) {
+    calibrateScaler(rawData[0], rawData[1], rawData[2]);
+  }
+
+  loadScaler("scalerCalibrationTable.csv");
 }
 
 void draw() {
@@ -39,7 +53,7 @@ void draw() {
   if (dataUpdated) {
     //background(52);
     fill(255);
-    float[] X = {rawData[0], rawData[1], rawData[2]}; 
+    float[] X = {(rawData[0] - scalerMean[0])/scalerVariance[0], (rawData[1] - scalerMean[1])/scalerVariance[1], (rawData[2] - scalerMean[2])/scalerVariance[2]}; 
     String Y = getPrediction(X);
     char guess= Y.charAt(0);
 
@@ -49,6 +63,38 @@ void draw() {
     
     dataUpdated = false;
   }
+}
+
+void loadScaler(String filePath) {
+  Table calibrationTable = loadTable(filePath);
+  calibrationTable.addColumn("x");
+  calibrationTable.addColumn("y");
+  calibrationTable.addColumn("z");
+
+  float sumX = 0;
+  float sumY = 0;
+  float sumZ = 0;
+
+  for (TableRow row : calibrationTable.rows()) {
+    sumX += row.getFloat("x");
+    sumY += row.getFloat("y");
+    sumZ += row.getFloat("z");
+  }
+
+  float[] scalerMean_ = {sumX/calibrationTable.getRowCount(), sumY/calibrationTable.getRowCount(), sumZ/calibrationTable.getRowCount()};
+  scalerMean = scalerMean_;
+
+  float sqDiffX = 0;
+  float sqDiffY = 0;
+  float sqDiffZ = 0;
+  for (TableRow row : calibrationTable.rows()) {
+    sqDiffX += sq(row.getFloat("x") - scalerMean[0]);
+    sqDiffX += sq(row.getFloat("y") - scalerMean[0]);
+    sqDiffX += sq(row.getFloat("z") - scalerMean[0]);
+  }
+  
+  float[] scalerVariance_ = {sqDiffX/calibrationTable.getRowCount(), sqDiffY/calibrationTable.getRowCount(), sqDiffZ/calibrationTable.getRowCount()};
+  scalerVariance = scalerVariance_;
 }
 
 void serialEvent(Serial port) {   
@@ -77,5 +123,9 @@ void keyPressed() {
     else {
       println("Program paused");
     }
+  }
+  else if (key != CODED && key == 'c' || key == 'C') {
+    calibrateScaler(rawData[0], rawData[1], rawData[2]);
+    loadScaler("scalerCalibrationTable.csv");
   }
 }
