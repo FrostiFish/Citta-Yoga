@@ -1,6 +1,8 @@
 import processing.sound.*;
 
-void calibrateScaler(int x, int y, int z) {
+void calibrateScaler() {
+  println("updating Scaler...");
+  
   Table scalerCalibrationTable = new Table();
   scalerCalibrationTable.addColumn("x");
   scalerCalibrationTable.addColumn("y");
@@ -8,95 +10,90 @@ void calibrateScaler(int x, int y, int z) {
   int background = 255;
   int textSize = 32;
   int sampleCount = 25;
-  int waitTime = 3000;
+  int waitTime = 5000;
   int samples;
   int poseStartTime;
   TableRow newRow;
-
-  background(background);
-
-  pushStyle();
-  fill(0);
-  textSize(textSize);
   
-  text("Get ready for calibration", width/2, height/2);
-  delay(waitTime);
+  println("Get ready for calibration");
+  delay(1000);
+  println(3);
+  delay(1000);
+  println(2);
+  delay(1000);
+  println(1);
+  delay(1000);
 
-  background(background);
-  text("Take on pose A (Chaturanga)", width/2, height/2);
-
-  newRow = scalerCalibrationTable.addRow(); 
+  println("Take on pose A (Chaturanga)");
+ 
   samples = 0;
   poseStartTime = millis();
   delay(1000);
   
   while (samples < sampleCount) {
     if (dataUpdated) {
-      newRow.setFloat("x", x);
-      newRow.setFloat("y", y);
-      newRow.setFloat("z", z);
+      newRow = scalerCalibrationTable.addRow();
+      newRow.setFloat("x", rawData[0]);
+      newRow.setFloat("y", rawData[1]);
+      newRow.setFloat("z", rawData[2]);
       samples++;
     }
   }
   while(poseStartTime + waitTime > millis()) ;
 
-  background(background);
-  text("Take on pose B (Upward Dog)", width/2, height/2);
+  println("Take on pose B (Upward Dog)");
 
-  newRow = scalerCalibrationTable.addRow(); 
   samples = 0;
   poseStartTime = millis();
   delay(1000);
   
   while (samples < sampleCount) {
     if (dataUpdated) {
-      newRow.setFloat("x", x);
-      newRow.setFloat("y", y);
-      newRow.setFloat("z", z);
+      newRow = scalerCalibrationTable.addRow();
+      newRow.setFloat("x", rawData[0]);
+      newRow.setFloat("y", rawData[1]);
+      newRow.setFloat("z", rawData[2]);
       samples++;
     }
   }
   while(poseStartTime + waitTime > millis()) ;
 
-  background(background);
-  text("Take on pose C (Downward Dog)", width/2, height/2);
+  println("Take on pose C (Downward Dog)");
 
-  newRow = scalerCalibrationTable.addRow(); 
   samples = 0;
   poseStartTime = millis();
   delay(1000);
   
   while (samples < sampleCount) {
     if (dataUpdated) {
-      newRow.setFloat("x", x);
-      newRow.setFloat("y", y);
-      newRow.setFloat("z", z);
+      newRow = scalerCalibrationTable.addRow();
+      newRow.setFloat("x", rawData[0]);
+      newRow.setFloat("y", rawData[1]);
+      newRow.setFloat("z", rawData[2]);
       samples++;
     }
   }
   while(poseStartTime + waitTime > millis()) ;
 
-  background(background);
-  text("Take on pose D (Resting pose)", width/2, height/2);
+  println("Take on pose D (Resting pose)");
 
-  newRow = scalerCalibrationTable.addRow(); 
   samples = 0;
   poseStartTime = millis();
   delay(1000);
   
   while (samples < sampleCount) {
     if (dataUpdated) {
-      newRow.setFloat("x", x);
-      newRow.setFloat("y", y);
-      newRow.setFloat("z", z);
+      newRow = scalerCalibrationTable.addRow();
+      newRow.setFloat("x", rawData[0]);
+      newRow.setFloat("y", rawData[1]);
+      newRow.setFloat("z", rawData[2]);
       samples++;
     }
   }
   while(poseStartTime + waitTime > millis()) ;
-  
-  popStyle();
 
   saveTable(scalerCalibrationTable, "data/scalerCalibrationTable.csv");
+  println("saved calibration data as scalerCalibrationTable.csv");
 }
 
 class Interface {
