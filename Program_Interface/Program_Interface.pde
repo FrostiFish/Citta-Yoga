@@ -12,7 +12,7 @@ int sensorNum = 3;
 int[] rawData = new int[sensorNum];
 boolean dataUpdated = false;
 boolean run = true;
-boolean runMachine = false;
+boolean runMachine = true;
 
 float[] scalerMean = new float[3]; 
 float[] scalerVariance = new float[3]; ;
@@ -31,9 +31,9 @@ void setup() {
   
   programInterface = new Interface(this);
 
-  loadTrainARFF(dataset="A012GestTest2.arff"); //load a ARFF dataset
-  trainLinearSVC(C=1);               //train a linear SV classifier
-  saveModel(model="LinearSVC.model"); //save the model
+  //loadTrainARFF(dataset="A012GestTest2.arff"); //load a ARFF dataset
+  //trainLinearSVC(C=1);               //train a linear SV classifier
+  loadModel(model="combiScaled.model"); //save the model
 
   background(52);
 
@@ -52,6 +52,7 @@ void draw() {
 
   //image (img1,0,0, width,height);
   if (dataUpdated) {
+    
     //background(52);
     if (runMachine) {
       fill(255);

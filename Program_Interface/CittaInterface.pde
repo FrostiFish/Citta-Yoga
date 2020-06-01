@@ -37,6 +37,7 @@ void calibrateScaler() {
       newRow.setFloat("y", rawData[1]);
       newRow.setFloat("z", rawData[2]);
       samples++;
+      dataUpdated = false;
     }
   }
   while(poseStartTime + waitTime > millis()) ;
@@ -54,6 +55,7 @@ void calibrateScaler() {
       newRow.setFloat("y", rawData[1]);
       newRow.setFloat("z", rawData[2]);
       samples++;
+      dataUpdated = false;
     }
   }
   while(poseStartTime + waitTime > millis()) ;
@@ -71,6 +73,7 @@ void calibrateScaler() {
       newRow.setFloat("y", rawData[1]);
       newRow.setFloat("z", rawData[2]);
       samples++;
+      dataUpdated = false;
     }
   }
   while(poseStartTime + waitTime > millis()) ;
@@ -88,6 +91,7 @@ void calibrateScaler() {
       newRow.setFloat("y", rawData[1]);
       newRow.setFloat("z", rawData[2]);
       samples++;
+      dataUpdated = false;
     }
   }
   while(poseStartTime + waitTime > millis()) ;
